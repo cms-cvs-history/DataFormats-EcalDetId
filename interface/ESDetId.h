@@ -29,7 +29,7 @@ namespace cms
     /// get the subdetector
     EcalSubdetector subdet() const { return EcalSubdetector(subdetId()); }
     /** get the zside */
-    int zside() const { return (id_&0x4000)?(1):(-1); }
+    int zside() const { return (id_&0x40000)?(1):(-1); }
     /** get the plane */
     int plane() const { return (id_>>17)&0x1; }
     /** get the sensor ix */
