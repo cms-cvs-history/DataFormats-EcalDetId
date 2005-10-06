@@ -2,12 +2,12 @@
    \file
    Test suit for EcalDetId
 
-   \version $Id: $
+   \version $Id: testEcalDetId.cc,v 1.1 2005/07/27 10:36:11 meridian Exp $
 
    \note This test is not exaustive     
 */
 
-static const char CVSId[] = "$Id:$";
+static const char CVSId[] = "$Id: testEcalDetId.cc,v 1.1 2005/07/27 10:36:11 meridian Exp $";
 
 #include <cppunit/extensions/HelperMacros.h>
 #include <DataFormats/EcalDetId/interface/EBDetId.h>
@@ -16,8 +16,6 @@ static const char CVSId[] = "$Id:$";
 #include <DataFormats/EcalDetId/interface/EcalTrigTowerDetId.h>
 
 #include <iostream>
-
-using namespace cms;
 
 class testEcalDetId: public CppUnit::TestFixture {
 
