@@ -2,18 +2,19 @@
    \file
    Test suit for EcalDetId
 
-   \version $Id: testEcalDetId.cc,v 1.1 2005/07/27 10:36:11 meridian Exp $
+   \version $Id: testEcalDetId.cc,v 1.2 2005/10/06 11:02:56 meridian Exp $
 
    \note This test is not exaustive     
 */
 
-static const char CVSId[] = "$Id: testEcalDetId.cc,v 1.1 2005/07/27 10:36:11 meridian Exp $";
+static const char CVSId[] = "$Id: testEcalDetId.cc,v 1.2 2005/10/06 11:02:56 meridian Exp $";
 
 #include <cppunit/extensions/HelperMacros.h>
 #include <DataFormats/EcalDetId/interface/EBDetId.h>
 #include <DataFormats/EcalDetId/interface/EEDetId.h>
 #include <DataFormats/EcalDetId/interface/ESDetId.h>
 #include <DataFormats/EcalDetId/interface/EcalTrigTowerDetId.h>
+#include <DataFormats/EcalDetId/interface/EcalPnDiodeDetId.h>
 
 #include <iostream>
 
@@ -25,6 +26,7 @@ class testEcalDetId: public CppUnit::TestFixture {
   CPPUNIT_TEST(testEEDetId);
   CPPUNIT_TEST(testESDetId);
   CPPUNIT_TEST(testEcalTrigTowerDetId);
+  CPPUNIT_TEST(testPnDiodeDetId);
 
   CPPUNIT_TEST_SUITE_END();
 
@@ -37,6 +39,7 @@ public:
   void testEEDetId();
   void testESDetId();
   void testEcalTrigTowerDetId();
+  void testPnDiodeDetId();
  
 }; 
 
@@ -165,4 +168,20 @@ void testEcalDetId::testEcalTrigTowerDetId() {
 	  }
 	}
 
+}
+
+void testEcalDetId::testPnDiodeDetId() {
+
+  for (int iEcalSubDet=EcalBarrel ; iEcalSubDet<=EcalEndcap ; iEcalSubDet++)
+    for (int iDCC=1;iDCC<=36;iDCC++)
+      for (int iPn=1;iPn<=10;iPn++)
+	{
+	  //EcalTrigTowerDetId Zside 1 
+	  {
+	    EcalPnDiodeDetId aId(iEcalSubDet,iDCC,iPn);
+	    CPPUNIT_ASSERT(aId.iEcalSubDetectorId()==iEcalSubDet);
+	    CPPUNIT_ASSERT(aId.iDCCId()==iDCC);
+	    CPPUNIT_ASSERT(aId.iPnId()==iPn);
+	  }
+	}
 }
