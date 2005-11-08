@@ -3,4 +3,4 @@
 <bin name=testEcalDetId file=testRunner.cpp,testEcalDetId.cc>
   <use name=cppunit>
 </bin>
-
+<bin file=printEBDetId.cpp></bin>

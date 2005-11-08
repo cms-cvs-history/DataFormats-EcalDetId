@@ -2,12 +2,12 @@
    \file
    Test suit for EcalDetId
 
-   \version $Id: testEcalDetId.cc,v 1.2 2005/10/06 11:02:56 meridian Exp $
+   \version $Id: testEcalDetId.cc,v 1.3 2005/10/07 15:36:10 meridian Exp $
 
    \note This test is not exaustive     
 */
 
-static const char CVSId[] = "$Id: testEcalDetId.cc,v 1.2 2005/10/06 11:02:56 meridian Exp $";
+static const char CVSId[] = "$Id: testEcalDetId.cc,v 1.3 2005/10/07 15:36:10 meridian Exp $";
 
 #include <cppunit/extensions/HelperMacros.h>
 #include <DataFormats/EcalDetId/interface/EBDetId.h>
@@ -48,9 +48,10 @@ CPPUNIT_TEST_SUITE_REGISTRATION(testEcalDetId);
 
 void testEcalDetId::testEBDetId(){
 
+  EBDetId smId;
 
-  for (int ieta=1;ieta<=EBDetId::MAX_IETA;ieta++)
-      for (int iphi=1;iphi<=EBDetId::MAX_IPHI;iphi++)
+  for (int ieta=EBDetId::MIN_IETA;ieta<=EBDetId::MAX_IETA;ieta++)
+      for (int iphi=EBDetId::MIN_IPHI;iphi<=EBDetId::MAX_IPHI;iphi++)
 	{
 	  //EBDetId Zside 1 
 	  {
@@ -59,7 +60,18 @@ void testEcalDetId::testEBDetId(){
 	    CPPUNIT_ASSERT(aPositiveId.iphi()==iphi);
 	    CPPUNIT_ASSERT(aPositiveId.zside()==1);
 	    CPPUNIT_ASSERT(aPositiveId.ietaAbs()==ieta);
+
+	    smId = EBDetId(aPositiveId.ism(), aPositiveId.ic(),
+			   EBDetId::SMCRYSTALMODE);
+	    CPPUNIT_ASSERT(aPositiveId==smId);
+	    CPPUNIT_ASSERT(aPositiveId.ism()==smId.ism());
+	    CPPUNIT_ASSERT(aPositiveId.ic()==smId.ic());
+	    CPPUNIT_ASSERT(smId.ism()>=EBDetId::MIN_SM);
+	    CPPUNIT_ASSERT(smId.ism()<=EBDetId::MAX_SM);
+	    CPPUNIT_ASSERT(smId.ic()>=EBDetId::MIN_C);
+	    CPPUNIT_ASSERT(smId.ic()<=EBDetId::MAX_C);
 	  }
+
 	  //EBDetId Zside -1 
 	  {
 	    EBDetId aNegativeId(-1*ieta,iphi);
@@ -67,6 +79,17 @@ void testEcalDetId::testEBDetId(){
 	    CPPUNIT_ASSERT(aNegativeId.iphi()==iphi);
 	    CPPUNIT_ASSERT(aNegativeId.zside()==-1);
 	    CPPUNIT_ASSERT(aNegativeId.ietaAbs()==ieta);
+
+	    smId = EBDetId(aNegativeId.ism(), aNegativeId.ic(),
+			   EBDetId::SMCRYSTALMODE);
+	    CPPUNIT_ASSERT(aNegativeId==smId);
+	    CPPUNIT_ASSERT(aNegativeId.ism()==smId.ism());
+	    CPPUNIT_ASSERT(aNegativeId.ic()==smId.ic());
+	    CPPUNIT_ASSERT(smId.ism()>=EBDetId::MIN_SM);
+	    CPPUNIT_ASSERT(smId.ism()<=EBDetId::MAX_SM);
+	    CPPUNIT_ASSERT(smId.ic()>=EBDetId::MIN_C);
+	    CPPUNIT_ASSERT(smId.ic()<=EBDetId::MAX_C);
+
 	  }
 	}
   
