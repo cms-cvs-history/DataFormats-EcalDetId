@@ -2,12 +2,12 @@
    \file
    Test suit for EcalDetId
 
-   \version $Id: testEcalDetId.cc,v 1.3 2005/10/07 15:36:10 meridian Exp $
+   \version $Id: testEcalDetId.cc,v 1.4 2005/11/08 22:25:05 egeland Exp $
 
    \note This test is not exaustive     
 */
 
-static const char CVSId[] = "$Id: testEcalDetId.cc,v 1.3 2005/10/07 15:36:10 meridian Exp $";
+static const char CVSId[] = "$Id: testEcalDetId.cc,v 1.4 2005/11/08 22:25:05 egeland Exp $";
 
 #include <cppunit/extensions/HelperMacros.h>
 #include <DataFormats/EcalDetId/interface/EBDetId.h>
@@ -170,12 +170,13 @@ void testEcalDetId::testESDetId(){
 
 void testEcalDetId::testEcalTrigTowerDetId() {
 
-  for (int ieta=EcalTrigTowerDetId::MIN_IETA;ieta<=EcalTrigTowerDetId::MAX_IETA;ieta++)
-      for (int iphi=EcalTrigTowerDetId::MIN_IPHI;iphi<=EcalTrigTowerDetId::MAX_IPHI;iphi++)
+  for (int ieta=EcalTrigTowerDetId::MIN_I;ieta<=EcalTrigTowerDetId::MAX_I;ieta++)
+      for (int iphi=EcalTrigTowerDetId::MIN_I;iphi<=EcalTrigTowerDetId::MAX_I;iphi++)
 	{
 	  //EcalTrigTowerDetId Zside 1 
 	  {
-	    EcalTrigTowerDetId aPositiveId(ieta,iphi);
+	    EcalTrigTowerDetId aPositiveId(1,EcalBarrel,ieta,iphi);
+	    CPPUNIT_ASSERT(aPositiveId.subDet()==EcalBarrel);
 	    CPPUNIT_ASSERT(aPositiveId.ieta()==ieta);
 	    CPPUNIT_ASSERT(aPositiveId.iphi()==iphi);
 	    CPPUNIT_ASSERT(aPositiveId.zside()==1);
@@ -183,11 +184,33 @@ void testEcalDetId::testEcalTrigTowerDetId() {
 	  }
 	  //EcalTrigTowerDetId Zside -1 
 	  {
-	    EcalTrigTowerDetId aNegativeId(-1*ieta,iphi);
+	    EcalTrigTowerDetId aNegativeId(-1,EcalBarrel,ieta,iphi);
+	    CPPUNIT_ASSERT(aNegativeId.subDet()==EcalBarrel);
 	    CPPUNIT_ASSERT(aNegativeId.ieta()==-1*ieta);
 	    CPPUNIT_ASSERT(aNegativeId.iphi()==iphi);
 	    CPPUNIT_ASSERT(aNegativeId.zside()==-1);
 	    CPPUNIT_ASSERT(aNegativeId.ietaAbs()==ieta);
+	  }
+	}
+
+  for (int ix=EcalTrigTowerDetId::MIN_I;ix<=EcalTrigTowerDetId::MAX_I;ix++)
+      for (int iy=EcalTrigTowerDetId::MIN_I;iy<=EcalTrigTowerDetId::MAX_I;iy++)
+	{
+	  //EcalTrigTowerDetId Zside 1 
+	  {
+	    EcalTrigTowerDetId aPositiveId(1,EcalEndcap,ix,iy);
+	    CPPUNIT_ASSERT(aPositiveId.ix()==ix);
+	    CPPUNIT_ASSERT(aPositiveId.subDet()==EcalEndcap);
+	    CPPUNIT_ASSERT(aPositiveId.iy()==iy);
+	    CPPUNIT_ASSERT(aPositiveId.zside()==1);
+	  }
+	  //EcalTrigTowerDetId Zside -1 
+	  {
+	    EcalTrigTowerDetId aNegativeId(-1,EcalEndcap,ix,iy);
+	    CPPUNIT_ASSERT(aNegativeId.subDet()==EcalEndcap);
+	    CPPUNIT_ASSERT(aNegativeId.ix()==ix);
+	    CPPUNIT_ASSERT(aNegativeId.iy()==iy);
+	    CPPUNIT_ASSERT(aNegativeId.zside()==-1);
 	  }
 	}
 
