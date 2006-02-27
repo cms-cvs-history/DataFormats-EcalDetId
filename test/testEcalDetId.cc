@@ -2,12 +2,12 @@
    \file
    Test suit for EcalDetId
 
-   \version $Id: testEcalDetId.cc,v 1.4 2005/11/08 22:25:05 egeland Exp $
+   \version $Id: testEcalDetId.cc,v 1.5 2005/12/19 17:50:44 rahatlou Exp $
 
    \note This test is not exaustive     
 */
 
-static const char CVSId[] = "$Id: testEcalDetId.cc,v 1.4 2005/11/08 22:25:05 egeland Exp $";
+static const char CVSId[] = "$Id: testEcalDetId.cc,v 1.5 2005/12/19 17:50:44 rahatlou Exp $";
 
 #include <cppunit/extensions/HelperMacros.h>
 #include <DataFormats/EcalDetId/interface/EBDetId.h>
@@ -128,39 +128,39 @@ void testEcalDetId::testESDetId(){
       {
 	//ESDetId Plane 0 Zside 1 
 	{
-	  ESDetId aPositiveId(istrip,ix,iy,0,1);
-	  CPPUNIT_ASSERT(aPositiveId.strip()==istrip);
-	  CPPUNIT_ASSERT(aPositiveId.six()==ix);
-	  CPPUNIT_ASSERT(aPositiveId.siy()==iy);
-	  CPPUNIT_ASSERT(aPositiveId.plane()==0);
-	  CPPUNIT_ASSERT(aPositiveId.zside()==1);
-
-	}
-	//ESDetId Plane 1 Zside 1 
-	{
 	  ESDetId aPositiveId(istrip,ix,iy,1,1);
 	  CPPUNIT_ASSERT(aPositiveId.strip()==istrip);
 	  CPPUNIT_ASSERT(aPositiveId.six()==ix);
 	  CPPUNIT_ASSERT(aPositiveId.siy()==iy);
 	  CPPUNIT_ASSERT(aPositiveId.plane()==1);
 	  CPPUNIT_ASSERT(aPositiveId.zside()==1);
+
+	}
+	//ESDetId Plane 1 Zside 1 
+	{
+	  ESDetId aPositiveId(istrip,ix,iy,2,1);
+	  CPPUNIT_ASSERT(aPositiveId.strip()==istrip);
+	  CPPUNIT_ASSERT(aPositiveId.six()==ix);
+	  CPPUNIT_ASSERT(aPositiveId.siy()==iy);
+	  CPPUNIT_ASSERT(aPositiveId.plane()==2);
+	  CPPUNIT_ASSERT(aPositiveId.zside()==1);
 	}
 	//ESDetId Plane 0 Zside -1 
-	{
-	  ESDetId aNegativeId(istrip,ix,iy,0,-1);
-	  CPPUNIT_ASSERT(aNegativeId.strip()==istrip);
-	  CPPUNIT_ASSERT(aNegativeId.six()==ix);
-	  CPPUNIT_ASSERT(aNegativeId.siy()==iy);
-	  CPPUNIT_ASSERT(aNegativeId.plane()==0);
-	  CPPUNIT_ASSERT(aNegativeId.zside()==-1);
-	}
-	//ESDetId Plane 1 Zside -1 
 	{
 	  ESDetId aNegativeId(istrip,ix,iy,1,-1);
 	  CPPUNIT_ASSERT(aNegativeId.strip()==istrip);
 	  CPPUNIT_ASSERT(aNegativeId.six()==ix);
 	  CPPUNIT_ASSERT(aNegativeId.siy()==iy);
 	  CPPUNIT_ASSERT(aNegativeId.plane()==1);
+	  CPPUNIT_ASSERT(aNegativeId.zside()==-1);
+	}
+	//ESDetId Plane 1 Zside -1 
+	{
+	  ESDetId aNegativeId(istrip,ix,iy,2,-1);
+	  CPPUNIT_ASSERT(aNegativeId.strip()==istrip);
+	  CPPUNIT_ASSERT(aNegativeId.six()==ix);
+	  CPPUNIT_ASSERT(aNegativeId.siy()==iy);
+	  CPPUNIT_ASSERT(aNegativeId.plane()==2);
 	  CPPUNIT_ASSERT(aNegativeId.zside()==-1);
 	}
       }
