@@ -2,13 +2,14 @@
    \file
    Test suit for EcalDetId
 
-   \version $Id: testEcalDetId.cc,v 1.6 2006/02/27 18:59:15 meridian Exp $
+   \version $Id: testEcalDetId.cc,v 1.7 2006/03/14 15:52:55 meridian Exp $
 
    \note This test is not exaustive     
 */
 
-static const char CVSId[] = "$Id: testEcalDetId.cc,v 1.6 2006/02/27 18:59:15 meridian Exp $";
+static const char CVSId[] = "$Id: testEcalDetId.cc,v 1.7 2006/03/14 15:52:55 meridian Exp $";
 
+#include <Utilities/Testing/interface/CppUnit_testdriver.icpp>
 #include <cppunit/extensions/HelperMacros.h>
 #include <DataFormats/EcalDetId/interface/EBDetId.h>
 #include <DataFormats/EcalDetId/interface/EEDetId.h>
@@ -16,6 +17,7 @@ static const char CVSId[] = "$Id: testEcalDetId.cc,v 1.6 2006/02/27 18:59:15 mer
 #include <DataFormats/EcalDetId/interface/EcalTrigTowerDetId.h>
 #include <DataFormats/EcalDetId/interface/EcalElectronicsId.h>
 #include <DataFormats/EcalDetId/interface/EcalPnDiodeDetId.h>
+
 
 #include <iostream>
 
