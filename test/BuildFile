@@ -4,3 +4,4 @@
   <use name=cppunit>
 </bin>
 <bin file=printEBDetId.cpp></bin>
+<bin file=testEEHashedIndex.cpp></bin>
