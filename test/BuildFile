@@ -5,3 +5,6 @@
 </bin>
 <bin file=printEBDetId.cpp></bin>
 <bin file=testEEHashedIndex.cpp></bin>
+<bin name=testEcalContainer file=testEcalContainer.cpp>
+  <use name=cppunit>
+</bin>
