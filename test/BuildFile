@@ -4,6 +4,8 @@
   <use name=cppunit>
 </bin>
 <bin file=printEBDetId.cpp></bin>
+<bin file=printEEDetId.cpp></bin>
+<bin file=testScHashedIndex.cpp></bin>
 <bin file=testEEHashedIndex.cpp></bin>
 <bin file=testEBHashedIndex.cpp></bin>
 <bin file=testEcalDetIdLoop.cpp></bin>
