@@ -67,9 +67,10 @@ EEDetId::EEDetId( int index1, int index2, int iz, int mode ) : DetId( Ecal, Ecal
    {
       int SC = index1;
       int crystal = index2;
-      //      std::cout << "iz " << iz << " SC " << index1 << "crystal " << index2  << std::endl;
+
+      const int isz ( iz>0 ? 1 : -1 ) ;
       
-      crystal_ix=iz*ix(SC,crystal);
+      crystal_ix=isz*ix(SC,crystal);
       if (crystal_ix<0)
 	crystal_ix++;
       crystal_ix+=50;
@@ -90,7 +91,10 @@ EEDetId::EEDetId( int index1, int index2, int iz, int mode ) : DetId( Ecal, Ecal
                                            << "x = " << crystal_ix << " y = " << crystal_iy << " z = " << iz;
    }
   
-   id_|=(crystal_iy&0x7f)|((crystal_ix&0x7f)<<7)|((iz>0)?(0x4000):(0));
+   id_ |= (   ( crystal_iy & 0x7f )          |
+	      ( ( crystal_ix & 0x7f ) << 7 ) | 
+	      ( 0 < iz     ? (0x4000) : 0 )  |
+	      ( 2==abs(iz) ? (0x8000) : 0 )    ) ;
 }
   
 EEDetId::EEDetId( const DetId& gen ) 
@@ -116,7 +120,11 @@ EEDetId::unhashIndex( int hi )
 {
    if( validHashIndex( hi ) )
    {
-      const int iz ( hi<kEEhalf ? -1 : 1 ) ;
+//      const int iz ( hi<kEEhalf ? -1 : 1 ) ;
+      const int izz ( hi/kEEhalf ) ;
+      const int iz  ( 0 == izz ? -1 :
+		      ( 1 == izz ? 1 :
+			( 2 == izz ? -2 : 2 ) ) ) ;
       const uint32_t di ( hi%kEEhalf ) ;
       const int ii ( ( std::upper_bound( kdi, kdi+(2*IY_MAX), di ) - kdi ) - 1 ) ;
       const int iy ( 1 + ii/2 ) ;
@@ -563,7 +571,8 @@ EEDetId::validDetId(int crystal_ix, int crystal_iy, int iz)
 {
    bool valid = false;
    if (crystal_ix < IX_MIN ||  crystal_ix > IX_MAX ||
-       crystal_iy < IY_MIN || crystal_iy > IY_MAX || abs(iz) != 1 ) 
+       crystal_iy < IY_MIN || crystal_iy > IY_MAX || 
+       ( abs(iz) != 1 && abs(iz) != 2 ) ) 
    { 
       return valid ; 
    }
@@ -612,5 +621,6 @@ int EEDetId::distanceY(const EEDetId& a,const EEDetId& b)
 std::ostream& operator<<(std::ostream& s,const EEDetId& id) 
 {
    return s << "(EE iz " << ((id.zside()>0)?("+ "):("- ")) 
-	    << " ix " << id.ix() << " , iy " << id.iy() << ')';
+	    << abs( id.zside() )
+	    << ", ix " << id.ix() << " , iy " << id.iy() << ')';
 }

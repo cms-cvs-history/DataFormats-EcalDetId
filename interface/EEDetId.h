@@ -1,6 +1,7 @@
 #ifndef ECALDETID_EEDETID_H
 #define ECALDETID_EEDETID_H
 
+#include <cstdlib>
 #include <ostream>
 #include "DataFormats/DetId/interface/DetId.h"
 #include "DataFormats/EcalDetId/interface/EcalScDetId.h"
@@ -11,7 +12,7 @@
  *  Crystal/cell identifier class for the ECAL endcap
  *
  *
- *  $Id: EEDetId.h,v 1.24 2010/02/09 17:31:23 pgras Exp $
+ *  $Id: EEDetId.h,v 1.25 2010/03/03 18:52:39 ferriff Exp $
  */
 class EEDetId : public DetId {
    public:
@@ -62,19 +63,23 @@ class EEDetId : public DetId {
       /** Gets the z-side of the crystal (1/-1)
        * @return -1 for EE-, +1 for EE+
        */
-      int zside() const { return (id_&0x4000)?(1):(-1); }
+      int zside() const 
+      {
+	 int j ( (id_&0xc000)>>14 ) ;
+	 return ( 3==j ? 2 : ( 2==j ? -2 : ( 1==j ? 1 : -1 ) ) ) ;
+      }
       
       /** Gets the crystal x-index.
        * @see EEDetId(int, int, int, int) for x-index definition
        * @return x-index
        */
-      int ix() const { return (id_>>7)&0x7F; }
+      int ix() const { return ( (id_>>7)&0x7F ) ; }
       
       /** Get the crystal y-index
        * @see EEDetId(int, int, int, int) for y-index definition.
        * @return y-index
        */
-      int iy() const { return id_&0x7F; }
+      int iy() const { return ( id_&0x7F ) ; }
       
       /** Gets the DetId of the supercrystal the crystal belong to.
        * @return the supercrystal det id
@@ -82,7 +87,8 @@ class EEDetId : public DetId {
        */ 
       EcalScDetId sc() const {
 	 const int scEdge = 5;
-	 return EcalScDetId(1+(ix()-1)/scEdge, 1+(iy()-1)/scEdge, zside());
+	 return EcalScDetId(1+(ix()-1)/scEdge, 1+(iy()-1)/scEdge, 
+			    ( zside()>0 ? 1 : -1 )  );
       }
       
       /** Gets the SuperCrystal number within the endcap. This number runs from 1 to 316,
@@ -178,7 +184,9 @@ class EEDetId : public DetId {
       {
 	 const uint32_t jx ( ix() ) ;
 	 const uint32_t jd ( 2*( iy() - 1 ) + ( jx - 1 )/50 ) ;
-	 return (  ( zside()<0 ? 0 : kEEhalf ) + kdi[jd] + jx - kxf[jd] ) ;
+	 return ( ( 2 == abs( zside() ) ? 2*kEEhalf : 0 ) +
+		  ( zside()<0 ? 0 : kEEhalf ) +
+		  kdi[ jd ] + jx - kxf[ jd ] ) ;
       }
 
       /** Same as hashedIndex()
@@ -307,7 +315,7 @@ class EEDetId : public DetId {
 	 /** Number of dense crystal indices, that is number of
 	  * crystals per endcap.
 	  */
-	 kSizeForDenseIndexing = 2*kEEhalf
+	 kSizeForDenseIndexing = 2*kEEhalf*2
       };
 
       /*@{*/
